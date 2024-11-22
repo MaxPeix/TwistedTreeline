@@ -10,6 +10,12 @@ public class PlayerMovement : MonoBehaviour
     private GameObject target;
     private float range = 5f;
 
+    public GameObject clickEffectPrefab;
+    public GameObject selectTowerEffectPrefab;
+    public GameObject selectMinionEffectPrefab;
+
+    private GameObject activeSelectEffect;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
     {
         HandleClick();
         Move();
+        UpdateEffect();
     }
 
     private void HandleClick()
@@ -35,17 +42,34 @@ public class PlayerMovement : MonoBehaviour
             {
                 agent.SetDestination(hit.point);
                 target = null;
+                GameObject clickEffect = Instantiate(clickEffectPrefab, new Vector3(hit.point.x, 0.1f, hit.point.z), Quaternion.identity);
+                Destroy(clickEffect, 0.1f);
+                if (activeSelectEffect != null)
+                {
+                    Destroy(activeSelectEffect);
+                    activeSelectEffect = null;
+                }
             }
 
             //if ray hit object with tag "enemy"
             if (Physics.Raycast(ray, out hit) && hit.collider.CompareTag("Tower"))
             {
                 target = hit.collider.gameObject;
+                if (activeSelectEffect != null)
+                {
+                    Destroy(activeSelectEffect);
+                }
+                activeSelectEffect = Instantiate(selectTowerEffectPrefab, target.transform.position, Quaternion.identity);
             }
 
             if (Physics.Raycast(ray, out hit) && hit.collider.CompareTag("Minions"))
             {
                 target = hit.collider.gameObject;
+                if (activeSelectEffect != null)
+                {
+                    Destroy(activeSelectEffect);
+                }
+                activeSelectEffect = Instantiate(selectMinionEffectPrefab, target.transform.position, Quaternion.identity);
             }
         }
     }
@@ -74,5 +98,17 @@ public class PlayerMovement : MonoBehaviour
     {
         Debug.Log("Attack");
         agent.SetDestination(transform.position);
+    }
+
+    private void UpdateEffect()
+    {
+        if (activeSelectEffect != null)
+        {
+            //update effect position with Y = 0.1f
+            if (activeSelectEffect != null)
+            {
+                activeSelectEffect.transform.position = new Vector3(target.transform.position.x, 0.1f, target.transform.position.z);
+            }
+        }
     }
 }
