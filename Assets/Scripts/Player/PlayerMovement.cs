@@ -37,13 +37,15 @@ public class PlayerMovement : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
-            //if ray hit object with tag "map"
+            // Check if the ray hit an object with the "Map" tag
             if (Physics.Raycast(ray, out hit) && hit.collider.CompareTag("Map"))
             {
                 agent.SetDestination(hit.point);
                 target = null;
+
                 GameObject clickEffect = Instantiate(clickEffectPrefab, new Vector3(hit.point.x, 0.1f, hit.point.z), Quaternion.identity);
                 Destroy(clickEffect, 0.1f);
+
                 if (activeSelectEffect != null)
                 {
                     Destroy(activeSelectEffect);
@@ -51,28 +53,34 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
 
-            //if ray hit object with tag "enemy"
-            if (Physics.Raycast(ray, out hit) && hit.collider.CompareTag("Tower"))
+            // Check if the player's tag is "PlayerRed" and select appropriate targets
+            if (CompareTag("PlayerRed"))
             {
-                target = hit.collider.gameObject;
-                if (activeSelectEffect != null)
+                if (Physics.Raycast(ray, out hit) && hit.collider.CompareTag("TowerBlue"))
                 {
-                    Destroy(activeSelectEffect);
+                    SelectTarget(hit.collider.gameObject, selectTowerEffectPrefab);
                 }
-                activeSelectEffect = Instantiate(selectTowerEffectPrefab, target.transform.position, Quaternion.identity);
+                else if (Physics.Raycast(ray, out hit) && hit.collider.CompareTag("MinionBlue"))
+                {
+                    SelectTarget(hit.collider.gameObject, selectMinionEffectPrefab);
+                }
             }
 
-            if (Physics.Raycast(ray, out hit) && hit.collider.CompareTag("Minions"))
+            // Check if the player's tag is "PlayerBlue" and select appropriate targets
+            if (CompareTag("PlayerBlue"))
             {
-                target = hit.collider.gameObject;
-                if (activeSelectEffect != null)
+                if (Physics.Raycast(ray, out hit) && hit.collider.CompareTag("TowerRed"))
                 {
-                    Destroy(activeSelectEffect);
+                    SelectTarget(hit.collider.gameObject, selectTowerEffectPrefab);
                 }
-                activeSelectEffect = Instantiate(selectMinionEffectPrefab, target.transform.position, Quaternion.identity);
+                else if (Physics.Raycast(ray, out hit) && hit.collider.CompareTag("MinionRed"))
+                {
+                    SelectTarget(hit.collider.gameObject, selectMinionEffectPrefab);
+                }
             }
         }
     }
+
 
     private void Move()
     {
@@ -91,13 +99,25 @@ public class PlayerMovement : MonoBehaviour
 
     private bool isInRange()
     {
-        return Vector3.Distance(transform.position, target.transform.position) < range;
+        return Vector3.Distance(transform.position, target.transform.position) <= range;
     }
 
     private void Attack()
     {
         Debug.Log("Attack");
         agent.SetDestination(transform.position);
+    }
+
+    private void SelectTarget(GameObject newTarget, GameObject effectPrefab)
+    {
+        target = newTarget;
+
+        if (activeSelectEffect != null)
+        {
+            Destroy(activeSelectEffect);
+        }
+
+        activeSelectEffect = Instantiate(effectPrefab, target.transform.position, Quaternion.identity);
     }
 
     private void UpdateEffect()

@@ -4,9 +4,13 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Tower
   - Map
-  - Minions
+  - PlayerRed
+  - PlayerBlue
+  - MinionRed
+  - MinionBlue
+  - TowerRed
+  - TowerBlue
   layers:
   - Default
   - TransparentFX
