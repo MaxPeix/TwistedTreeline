@@ -18,6 +18,9 @@ public class MinionsMovement : MonoBehaviour
    void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        agent.avoidancePriority = Random.Range(20, 80); // Assign random priority to avoid collisions
+        agent.radius = 0.2f; // Adjust this based on your scene
+        agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
 
         if (isCaster)
         {
@@ -69,7 +72,6 @@ public class MinionsMovement : MonoBehaviour
             }
         }
     }
-
 
     private void Attack()
     {
