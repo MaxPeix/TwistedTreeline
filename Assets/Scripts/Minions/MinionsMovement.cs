@@ -8,19 +8,29 @@ public class MinionsMovement : MonoBehaviour
     private NavMeshAgent agent;
     private GameObject target;
     private GameObject enemyCore;
+    private GameObject previousTarget;
 
     private float attackRange = 3f;
     public float detectRange = 8f;
 
-    [SerializeField] private bool isCaster;
+    public bool isCaster;
+
+    // Add LifeSystem to handle HP and Damage for minions
+    private LifeSystem lifeSystem;
 
     // Start is called before the first frame update
-   void Start()
+    void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         agent.avoidancePriority = Random.Range(20, 80); // Assign random priority to avoid collisions
         agent.radius = 0.2f; // Adjust this based on your scene
-        agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
+    
+        lifeSystem = GetComponent<LifeSystem>(); // Get the LifeSystem component
+
+        if (lifeSystem != null)
+        {
+            lifeSystem.Initialize(100, 0, 0, 25, 0); // Initialize stats for minions
+        }
 
         if (isCaster)
         {
@@ -41,8 +51,6 @@ public class MinionsMovement : MonoBehaviour
         {
             enemyCore = GameObject.Find("RedCore");
         }
-
-        // Debug.Log("Enemy Core Target: " + enemyCore); // Debugging line
     }
 
     // Update is called once per frame
@@ -50,12 +58,20 @@ public class MinionsMovement : MonoBehaviour
     {
         Move();
         CheckForTarget();
-        // Debug.Log(target);
     }
 
     private bool isInRangeAttack()
     {
-        return Vector3.Distance(transform.position, target.transform.position) <= attackRange;
+        float adjustedRange = attackRange;
+
+        if (target != null && (target.CompareTag("TowerRed") || target.CompareTag("TowerBlue")))
+        {
+            // Add extra range for towers
+            adjustedRange += 1.5f;
+        }
+
+        // Check if the target is within the adjusted range
+        return Vector3.Distance(transform.position, target.transform.position) <= adjustedRange;
     }
 
     private void Move()
@@ -68,19 +84,48 @@ public class MinionsMovement : MonoBehaviour
             }
             else
             {
-                agent.SetDestination(target.transform.position);
+                NavMeshPath path = new NavMeshPath();
+                if (NavMesh.CalculatePath(transform.position, target.transform.position, NavMesh.AllAreas, path))
+                {
+                    agent.SetDestination(target.transform.position);
+                }
+                else
+                {
+                    Debug.LogWarning("Target is unreachable!");
+                    // Manual movement as a fallback if the target is unreachable
+                    Vector3 direction = (target.transform.position - transform.position).normalized;
+                    transform.position += direction * Time.deltaTime * agent.speed;
+                }
             }
         }
     }
 
     private void Attack()
     {
-        Debug.Log("Attack");
+        if (lifeSystem != null && lifeSystem.CanAttack())  // Check if minion can attack
+        {
+            if (target != null)
+            {
+                LifeSystem targetLifeSystem = target.GetComponent<LifeSystem>();
+
+                if (targetLifeSystem != null)
+                {
+                    targetLifeSystem.TakeDamage(lifeSystem.GetAttackDamage());
+                }
+            }
+        }
+        else
+        {
+            // Debug.Log("Attack on cooldown.");
+        }
+
+        // Stop movement after attacking
         agent.SetDestination(transform.position);
     }
 
     private void CheckForTarget()
     {
+        previousTarget = target;
         // Clear the current target
         target = null;
 
@@ -130,6 +175,11 @@ public class MinionsMovement : MonoBehaviour
         else
         {
             target = enemyCore;
+        }
+
+        if (previousTarget != target)
+        {
+            agent.SetDestination(transform.position);
         }
     }
 

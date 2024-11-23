@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class PlayerMovement : MonoBehaviour
 {
     private NavMeshAgent agent;
+    private LifeSystem lifeSystem;
 
     private GameObject target;
     private float range = 5f;
@@ -20,14 +21,20 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        lifeSystem = GetComponent<LifeSystem>();
+
+        if (lifeSystem != null)
+        {
+            lifeSystem.Initialize(1000, 30, 25, 50, 0);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        // Debug.Log("Player hp: " + lifeSystem.GetHP());
         HandleClick();
         Move();
-        UpdateEffect();
     }
 
     private void HandleClick()
@@ -81,7 +88,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-
     private void Move()
     {
         if (target != null)
@@ -104,7 +110,22 @@ public class PlayerMovement : MonoBehaviour
 
     private void Attack()
     {
-        Debug.Log("Attack");
+        if (lifeSystem != null && lifeSystem.CanAttack())  // Check if player can attack
+        {
+            // Attack logic
+            LifeSystem targetLifeSystem = target.GetComponent<LifeSystem>();
+            if (targetLifeSystem != null)
+            {
+                targetLifeSystem.TakeDamage(lifeSystem.GetAttackDamage());
+                // Debug.Log("Attacking Target");
+            }
+        }
+        else
+        {
+            // Debug.Log("Attack on cooldown.");
+        }
+
+        // Stop movement after attacking
         agent.SetDestination(transform.position);
     }
 
@@ -112,23 +133,25 @@ public class PlayerMovement : MonoBehaviour
     {
         target = newTarget;
 
+        // Destroy the previous effect if it exists
         if (activeSelectEffect != null)
         {
             Destroy(activeSelectEffect);
         }
 
+        // Instantiate the effect at the target's position, but not parent it yet
         activeSelectEffect = Instantiate(effectPrefab, target.transform.position, Quaternion.identity);
-    }
 
-    private void UpdateEffect()
-    {
-        if (activeSelectEffect != null)
-        {
-            //update effect position with Y = 0.1f
-            if (activeSelectEffect != null)
-            {
-                activeSelectEffect.transform.position = new Vector3(target.transform.position.x, 0.1f, target.transform.position.z);
-            }
-        }
+        // Preserve the original scale of the prefab by using the prefab's original localScale
+        Vector3 originalScale = effectPrefab.transform.localScale;
+
+        // Set the target as its parent
+        activeSelectEffect.transform.SetParent(target.transform);
+
+        // Apply the original scale
+        activeSelectEffect.transform.localScale = originalScale;
+
+        // Set the effect's position to the target's position with Y as 0.1f
+        activeSelectEffect.transform.position = new Vector3(target.transform.position.x, 0.1f, target.transform.position.z);
     }
 }
