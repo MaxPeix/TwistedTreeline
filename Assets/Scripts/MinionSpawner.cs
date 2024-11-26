@@ -9,8 +9,11 @@ public class MinionSpawner : MonoBehaviour
     [SerializeField] private float spawnInterval = 0.02f;    // Time between spawns
     [SerializeField] private float waveInterval = 60f;      // Time between waves
 
-    private Vector3 redSpawnPoint = new Vector3(-37, 0, 0); // Red Minion spawn position
-    private Vector3 blueSpawnPoint = new Vector3(37, 0, 0); // Blue Minion spawn position
+    private Vector3 redSpawnPoint1 = new Vector3(-50, 0, 6); // Red Minion spawn position
+    private Vector3 blueSpawnPoint1 = new Vector3(50, 0, 6); // Blue Minion spawn position
+
+    private Vector3 redSpawnPoint2 = new Vector3(-50, 0, -6); // Red Minion spawn position
+    private Vector3 blueSpawnPoint2 = new Vector3(50, 0, -6); // Blue Minion spawn position
 
     private int minionsPerWave = 6; // Total minions per team in a wave
 
@@ -36,21 +39,18 @@ public class MinionSpawner : MonoBehaviour
             bool isCaster = i >= 3;
 
             // Spawn a Red Minion
-            SpawnMinion(redMinionPrefab, redSpawnPoint, isCaster);
+            SpawnMinion(redMinionPrefab, redSpawnPoint1, isCaster);
 
             // Spawn a Blue Minion
-            SpawnMinion(blueMinionPrefab, blueSpawnPoint, isCaster);
+            SpawnMinion(blueMinionPrefab, blueSpawnPoint1, isCaster);
 
-            // Adjust spawn positions for the next minions
-            redSpawnPoint.x += 0.6f;
-            blueSpawnPoint.x -= 0.6f;
+            SpawnMinion(redMinionPrefab, redSpawnPoint2, isCaster);
+
+            SpawnMinion(blueMinionPrefab, blueSpawnPoint2, isCaster);
+
 
             yield return new WaitForSeconds(spawnInterval);
         }
-
-        // Reset spawn positions for the next wave
-        redSpawnPoint.x = -37;
-        blueSpawnPoint.x = 37;
     }
 
     private void SpawnMinion(GameObject prefab, Vector3 spawnPosition, bool isCaster)
