@@ -32,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Debug.Log("Player hp: " + lifeSystem.GetHP());
+        //Debug.Log("Player hp: " + lifeSystem.GetHP());
         HandleClick();
         Move();
     }

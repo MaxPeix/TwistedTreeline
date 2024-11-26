@@ -78,6 +78,32 @@ public class MinionsMovement : MonoBehaviour
     {
         if (target != null)
         {
+            if (target.CompareTag("TowerRed") || target.CompareTag("TowerBlue"))
+            {
+                // put stopping distance to 10 for towers and put attack range to 5
+                agent.stoppingDistance = 15f;
+                if (isCaster)
+                {
+                    attackRange = 6f;
+                }
+                else
+                {
+                    attackRange = 3f;
+                }
+            }
+            else
+            {
+                // put stopping distance to 0 for minions and put attack range to default for melee and caster
+                agent.stoppingDistance = 0f;
+                if (isCaster)
+                {
+                    attackRange = 5f;
+                }
+                else
+                {
+                    attackRange = 2f;
+                }
+            }
             if (isInRangeAttack())
             {
                 Attack();
@@ -91,7 +117,7 @@ public class MinionsMovement : MonoBehaviour
                 }
                 else
                 {
-                    Debug.LogWarning("Target is unreachable!");
+                    //Debug.LogWarning("Target is unreachable!");
                     // Manual movement as a fallback if the target is unreachable
                     Vector3 direction = (target.transform.position - transform.position).normalized;
                     transform.position += direction * Time.deltaTime * agent.speed;

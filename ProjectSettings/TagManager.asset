@@ -11,6 +11,8 @@ TagManager:
   - MinionBlue
   - TowerRed
   - TowerBlue
+  - CoreRed
+  - CoreBlue
   layers:
   - Default
   - TransparentFX
