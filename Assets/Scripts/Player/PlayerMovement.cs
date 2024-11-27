@@ -32,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log("Player hp: " + lifeSystem.GetHP());
+        // Debug.Log("Target: " + target);
         HandleClick();
         Move();
     }
@@ -92,16 +92,35 @@ public class PlayerMovement : MonoBehaviour
     {
         if (target != null)
         {
+            Vector3 targetPosition = target.transform.position;
+
+            if (target.CompareTag("TowerBlue") || target.CompareTag("TowerRed"))
+            {
+                // Adjust target position for towers
+                float towerRadius = 3f; // Adjust this value as needed
+                Vector3 directionToTower = (target.transform.position - transform.position).normalized;
+                targetPosition = target.transform.position - directionToTower * towerRadius;
+
+                // Debug.Log("Adjusted target position for tower: " + targetPosition);
+            }
+
             if (isInRange())
             {
+                // Debug.Log("In range, attacking target.");
                 Attack();
             }
             else
             {
-                agent.SetDestination(target.transform.position);
+                // Debug.Log("Moving toward target at: " + targetPosition);
+                agent.SetDestination(targetPosition);
             }
         }
+        else
+        {
+            // Debug.Log("No target selected.");
+        }
     }
+
 
     private bool isInRange()
     {
