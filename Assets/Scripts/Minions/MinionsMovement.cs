@@ -73,17 +73,6 @@ public class MinionsMovement : MonoBehaviour
     {
         if (target != null)
         {
-            if (target.CompareTag("TowerRed") || target.CompareTag("TowerBlue"))
-            {
-                agent.stoppingDistance = 15f;
-                attackRange = isCaster ? 6f : 3f;
-            }
-            else
-            {
-                agent.stoppingDistance = 0f;
-                attackRange = isCaster ? 5f : 2f;
-            }
-
             if (isInRangeAttack())
             {
                 Attack();
