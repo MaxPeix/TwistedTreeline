@@ -9,6 +9,11 @@ public class MinionSpawner : MonoBehaviour
     [SerializeField] private float spawnInterval = 0.02f;    // Time between spawns
     [SerializeField] private float waveInterval = 60f;      // Time between waves
 
+    public GameObject[]BlueTopWaypoints;
+    public GameObject[]BlueBotWaypoints;
+    private GameObject[]RedTopWaypoints;
+    private GameObject[]RedBotWaypoints;
+
     private Vector3 redSpawnPoint1 = new Vector3(-50, 0, 6); // Red Minion spawn position
     private Vector3 blueSpawnPoint1 = new Vector3(50, 0, 6); // Blue Minion spawn position
 
@@ -19,6 +24,15 @@ public class MinionSpawner : MonoBehaviour
 
     void Start()
     {
+        // red waypoints are in reverse order
+        RedTopWaypoints = new GameObject[BlueTopWaypoints.Length];
+        RedBotWaypoints = new GameObject[BlueBotWaypoints.Length];
+        for (int i = 0; i < BlueTopWaypoints.Length; i++)
+        {
+            RedTopWaypoints[i] = BlueTopWaypoints[BlueTopWaypoints.Length - 1 - i];
+            RedBotWaypoints[i] = BlueBotWaypoints[BlueBotWaypoints.Length - 1 - i];
+        }
+
         StartCoroutine(SpawnMinionWaves());
     }
 
@@ -39,21 +53,21 @@ public class MinionSpawner : MonoBehaviour
             bool isCaster = i >= 3;
 
             // Spawn a Red Minion
-            SpawnMinion(redMinionPrefab, redSpawnPoint1, isCaster);
+            SpawnMinion(redMinionPrefab, redSpawnPoint1, isCaster, RedTopWaypoints);
 
             // Spawn a Blue Minion
-            SpawnMinion(blueMinionPrefab, blueSpawnPoint1, isCaster);
+            SpawnMinion(blueMinionPrefab, blueSpawnPoint1, isCaster, BlueTopWaypoints);
 
-            SpawnMinion(redMinionPrefab, redSpawnPoint2, isCaster);
+            SpawnMinion(redMinionPrefab, redSpawnPoint2, isCaster, RedBotWaypoints);
 
-            SpawnMinion(blueMinionPrefab, blueSpawnPoint2, isCaster);
+            SpawnMinion(blueMinionPrefab, blueSpawnPoint2, isCaster, BlueBotWaypoints);
 
 
             yield return new WaitForSeconds(spawnInterval);
         }
     }
 
-    private void SpawnMinion(GameObject prefab, Vector3 spawnPosition, bool isCaster)
+    private void SpawnMinion(GameObject prefab, Vector3 spawnPosition, bool isCaster, GameObject[] waypoints)
     {
         GameObject minion = Instantiate(prefab, spawnPosition, Quaternion.identity);
 
@@ -62,6 +76,7 @@ public class MinionSpawner : MonoBehaviour
         if (minionScript != null)
         {
             minionScript.isCaster = isCaster;
+            minionScript.waypoints = waypoints;
         }
     }
 }

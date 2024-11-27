@@ -15,6 +15,8 @@ public class MinionsMovement : MonoBehaviour
 
     public bool isCaster;
 
+    public GameObject[] waypoints;
+
     // Add LifeSystem to handle HP and Damage for minions
     private LifeSystem lifeSystem;
 
