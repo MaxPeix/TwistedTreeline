@@ -53,14 +53,14 @@ public class MinionSpawner : MonoBehaviour
             bool isCaster = i >= 3;
 
             // Spawn a Red Minion
-            SpawnMinion(redMinionPrefab, redSpawnPoint1, isCaster, RedTopWaypoints);
+            SpawnMinion(redMinionPrefab, redSpawnPoint1, isCaster, RedBotWaypoints);
 
             // Spawn a Blue Minion
-            SpawnMinion(blueMinionPrefab, blueSpawnPoint1, isCaster, BlueTopWaypoints);
+            SpawnMinion(blueMinionPrefab, blueSpawnPoint1, isCaster, BlueBotWaypoints);
 
-            SpawnMinion(redMinionPrefab, redSpawnPoint2, isCaster, RedBotWaypoints);
+            SpawnMinion(redMinionPrefab, redSpawnPoint2, isCaster, RedTopWaypoints);
 
-            SpawnMinion(blueMinionPrefab, blueSpawnPoint2, isCaster, BlueBotWaypoints);
+            SpawnMinion(blueMinionPrefab, blueSpawnPoint2, isCaster, BlueTopWaypoints);
 
 
             yield return new WaitForSeconds(spawnInterval);

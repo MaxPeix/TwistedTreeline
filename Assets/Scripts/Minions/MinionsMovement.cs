@@ -7,7 +7,6 @@ public class MinionsMovement : MonoBehaviour
 {
     private NavMeshAgent agent;
     private GameObject target;
-    private GameObject enemyCore;
     private GameObject previousTarget;
 
     private float attackRange = 3f;
@@ -15,7 +14,8 @@ public class MinionsMovement : MonoBehaviour
 
     public bool isCaster;
 
-    public GameObject[] waypoints;
+    public GameObject[] waypoints; // Assign waypoints in the inspector
+    private int waypointIndex = 0;
 
     // Add LifeSystem to handle HP and Damage for minions
     private LifeSystem lifeSystem;
@@ -44,15 +44,6 @@ public class MinionsMovement : MonoBehaviour
             // Set the attackRange for melee minion
             attackRange = 2f;
         }
-
-        if (CompareTag("MinionRed"))
-        {
-            enemyCore = GameObject.Find("BlueCore");
-        }
-        else
-        {
-            enemyCore = GameObject.Find("RedCore");
-        }
     }
 
     // Update is called once per frame
@@ -60,6 +51,8 @@ public class MinionsMovement : MonoBehaviour
     {
         Move();
         CheckForTarget();
+        Debug.Log("Target: " + target);
+        Debug.Log("Waypoint Index: " + waypointIndex);
     }
 
     private bool isInRangeAttack()
@@ -82,55 +75,29 @@ public class MinionsMovement : MonoBehaviour
         {
             if (target.CompareTag("TowerRed") || target.CompareTag("TowerBlue"))
             {
-                // put stopping distance to 10 for towers and put attack range to 5
                 agent.stoppingDistance = 15f;
-                if (isCaster)
-                {
-                    attackRange = 6f;
-                }
-                else
-                {
-                    attackRange = 3f;
-                }
+                attackRange = isCaster ? 6f : 3f;
             }
             else
             {
-                // put stopping distance to 0 for minions and put attack range to default for melee and caster
                 agent.stoppingDistance = 0f;
-                if (isCaster)
-                {
-                    attackRange = 5f;
-                }
-                else
-                {
-                    attackRange = 2f;
-                }
+                attackRange = isCaster ? 5f : 2f;
             }
+
             if (isInRangeAttack())
             {
                 Attack();
             }
             else
             {
-                NavMeshPath path = new NavMeshPath();
-                if (NavMesh.CalculatePath(transform.position, target.transform.position, NavMesh.AllAreas, path))
-                {
-                    agent.SetDestination(target.transform.position);
-                }
-                else
-                {
-                    //Debug.LogWarning("Target is unreachable!");
-                    // Manual movement as a fallback if the target is unreachable
-                    Vector3 direction = (target.transform.position - transform.position).normalized;
-                    transform.position += direction * Time.deltaTime * agent.speed;
-                }
+                agent.SetDestination(target.transform.position);
             }
         }
     }
 
     private void Attack()
     {
-        if (lifeSystem != null && lifeSystem.CanAttack())  // Check if minion can attack
+        if (lifeSystem != null && lifeSystem.CanAttack())
         {
             if (target != null)
             {
@@ -142,52 +109,42 @@ public class MinionsMovement : MonoBehaviour
                 }
             }
         }
-        else
-        {
-            // Debug.Log("Attack on cooldown.");
-        }
 
-        // Stop movement after attacking
         agent.SetDestination(transform.position);
     }
 
     private void CheckForTarget()
     {
         previousTarget = target;
-        // Clear the current target
         target = null;
 
-        // List of potential targets sorted by priority
         List<GameObject> minions = new List<GameObject>();
         List<GameObject> towers = new List<GameObject>();
         List<GameObject> players = new List<GameObject>();
 
-        // Detect all colliders within the detect range
         Collider[] colliders = Physics.OverlapSphere(transform.position, detectRange);
 
         foreach (Collider collider in colliders)
         {
             GameObject obj = collider.gameObject;
 
-            // Check for opposing team tags
-            if (CompareTag("MinionRed") && obj.CompareTag("MinionBlue") || 
+            if (CompareTag("MinionRed") && obj.CompareTag("MinionBlue") ||
                 CompareTag("MinionBlue") && obj.CompareTag("MinionRed"))
             {
                 minions.Add(obj);
             }
-            else if (CompareTag("MinionRed") && obj.CompareTag("TowerBlue") || 
+            else if (CompareTag("MinionRed") && obj.CompareTag("TowerBlue") ||
                     CompareTag("MinionBlue") && obj.CompareTag("TowerRed"))
             {
                 towers.Add(obj);
             }
-            else if (CompareTag("MinionRed") && obj.CompareTag("PlayerBlue") || 
+            else if (CompareTag("MinionRed") && obj.CompareTag("PlayerBlue") ||
                     CompareTag("MinionBlue") && obj.CompareTag("PlayerRed"))
             {
                 players.Add(obj);
             }
         }
 
-        // Set target based on priority
         if (minions.Count > 0)
         {
             target = GetClosest(minions);
@@ -202,16 +159,27 @@ public class MinionsMovement : MonoBehaviour
         }
         else
         {
-            target = enemyCore;
-        }
+            // Default to waypoint navigation if no target
+            target = waypoints[waypointIndex];
 
-        if (previousTarget != target)
-        {
-            agent.SetDestination(transform.position);
+            float distanceToWaypoint = Vector3.Distance(transform.position, waypoints[waypointIndex].transform.position);
+            if (distanceToWaypoint < 0.5f) // Smaller threshold for reaching the waypoint
+            {
+                waypointIndex++; // Move to the next waypoint
+                if (waypointIndex >= waypoints.Length)
+                {
+                    waypointIndex = 0; // Loop back to the first waypoint
+                }
+            }
+
+            // Set the destination only if the target has changed
+            if (previousTarget != target || agent.destination != waypoints[waypointIndex].transform.position)
+            {
+                agent.SetDestination(waypoints[waypointIndex].transform.position);
+            }
         }
     }
 
-    // Helper method to find the closest target from a list
     private GameObject GetClosest(List<GameObject> objects)
     {
         GameObject closest = null;
@@ -230,14 +198,11 @@ public class MinionsMovement : MonoBehaviour
         return closest;
     }
 
-    // Uncomment this function to visualize the ranges in the Scene view
     private void OnDrawGizmos()
     {
-        // Draw detect range in blue
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, detectRange);
 
-        // Draw attack range in red
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
     }
