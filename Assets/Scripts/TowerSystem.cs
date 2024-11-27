@@ -29,7 +29,7 @@ public class TowerSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log("Tower HP: " + lifeSystem.GetHP());
+        // Debug.Log("Tower HP: " + lifeSystem.GetHP());
         if (lifeSystem.IsAlive())
         {
             // Priority targeting system

@@ -51,8 +51,8 @@ public class MinionsMovement : MonoBehaviour
     {
         Move();
         CheckForTarget();
-        Debug.Log("Target: " + target);
-        Debug.Log("Waypoint Index: " + waypointIndex);
+        // Debug.Log("Target: " + target);
+        // Debug.Log("Waypoint Index: " + waypointIndex);
     }
 
     private bool isInRangeAttack()
@@ -73,16 +73,50 @@ public class MinionsMovement : MonoBehaviour
     {
         if (target != null)
         {
+            // Adjust stopping distance dynamically
+            if (target.CompareTag("TowerRed") || target.CompareTag("TowerBlue"))
+            {
+                agent.stoppingDistance = Mathf.Min(attackRange, 3f); // Adjust stopping distance for towers
+            }
+            else
+            {
+                agent.stoppingDistance = 0f; // Default stopping distance
+            }
+
+            // Check if the agent is in range to attack
             if (isInRangeAttack())
             {
                 Attack();
             }
             else
             {
-                agent.SetDestination(target.transform.position);
+                // Calculate the closest point near the tower if the target is a tower
+                if (target.CompareTag("TowerRed") || target.CompareTag("TowerBlue"))
+                {
+                    Vector3 closestPoint = GetClosestPointOnBounds(target);
+                    agent.SetDestination(closestPoint);
+                }
+                else
+                {
+                    agent.SetDestination(target.transform.position);
+                }
             }
         }
     }
+
+    private Vector3 GetClosestPointOnBounds(GameObject target)
+    {
+        Collider towerCollider = target.GetComponent<Collider>();
+        if (towerCollider != null)
+        {
+            // Find the closest point on the collider bounds
+            return towerCollider.ClosestPoint(transform.position);
+        }
+        
+        // Fallback to the target's position if no collider is present
+        return target.transform.position;
+    }
+
 
     private void Attack()
     {
