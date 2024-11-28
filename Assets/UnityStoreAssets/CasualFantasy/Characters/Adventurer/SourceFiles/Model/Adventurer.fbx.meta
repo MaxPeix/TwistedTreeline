@@ -1,0 +1,190 @@
+fileFormatVersion: 2
+guid: c95f69bfd9444a34d827950f9ad48f87
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Armature
+    100004: Body
+    100006: Chest
+    100008: Fingers1.L
+    100010: Fingers1.R
+    100012: Fingers2.L
+    100014: Fingers2.L_end
+    100016: Fingers2.R
+    100018: Fingers2.R_end
+    100020: Foot.L
+    100022: Foot.L_end
+    100024: Foot.R
+    100026: Foot.R_end
+    100028: Hand.L
+    100030: Hand.R
+    100032: Head
+    100034: Head_end
+    100036: Hip
+    100038: IndexFinger1.L
+    100040: IndexFinger1.R
+    100042: IndexFinger2.L
+    100044: IndexFinger2.L_end
+    100046: IndexFinger2.R
+    100048: IndexFinger2.R_end
+    100050: LowerArm.L
+    100052: LowerArm.R
+    100054: Neck
+    100056: Shield
+    100058: Shin.L
+    100060: Shin.R
+    100062: Shoulder.L
+    100064: Shoulder.R
+    100066: Spine
+    100068: Sword
+    100070: Thigh.L
+    100072: Thigh.R
+    100074: Thumb1.L
+    100076: Thumb1.R
+    100078: Thumb2.L
+    100080: Thumb2.L_end
+    100082: Thumb2.R
+    100084: Thumb2.R_end
+    100086: UpperArm.L
+    100088: UpperArm.R
+    400000: //RootNode
+    400002: Armature
+    400004: Body
+    400006: Chest
+    400008: Fingers1.L
+    400010: Fingers1.R
+    400012: Fingers2.L
+    400014: Fingers2.L_end
+    400016: Fingers2.R
+    400018: Fingers2.R_end
+    400020: Foot.L
+    400022: Foot.L_end
+    400024: Foot.R
+    400026: Foot.R_end
+    400028: Hand.L
+    400030: Hand.R
+    400032: Head
+    400034: Head_end
+    400036: Hip
+    400038: IndexFinger1.L
+    400040: IndexFinger1.R
+    400042: IndexFinger2.L
+    400044: IndexFinger2.L_end
+    400046: IndexFinger2.R
+    400048: IndexFinger2.R_end
+    400050: LowerArm.L
+    400052: LowerArm.R
+    400054: Neck
+    400056: Shield
+    400058: Shin.L
+    400060: Shin.R
+    400062: Shoulder.L
+    400064: Shoulder.R
+    400066: Spine
+    400068: Sword
+    400070: Thigh.L
+    400072: Thigh.R
+    400074: Thumb1.L
+    400076: Thumb1.R
+    400078: Thumb2.L
+    400080: Thumb2.L_end
+    400082: Thumb2.R
+    400084: Thumb2.R_end
+    400086: UpperArm.L
+    400088: UpperArm.R
+    2100000: warrior_texture
+    4300000: Shield
+    4300002: Sword
+    4300004: Body
+    7400000: Armature|ArmatureAction
+    9500000: //RootNode
+    13700000: Body
+    13700002: Shield
+    13700004: Sword
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 0.0025
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 0
+    previousCalculatedGlobalScale: 0.0025
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 1
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 1
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 3
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

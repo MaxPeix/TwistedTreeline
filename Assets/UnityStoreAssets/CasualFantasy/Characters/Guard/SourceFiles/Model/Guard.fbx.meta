@@ -1,0 +1,208 @@
+fileFormatVersion: 2
+guid: 52500ddcd403ee3448c79ec8fbb767db
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Armature
+    100002: body_main.001
+    100004: Chest
+    100006: chest_front.001
+    100008: Fingers1.L
+    100010: Fingers1.R
+    100012: Fingers2.L
+    100014: Fingers2.L_end
+    100016: Fingers2.R
+    100018: Fingers2.R_end
+    100020: Foot.L
+    100022: Foot.L_end
+    100024: Foot.R
+    100026: Foot.R_end
+    100028: //RootNode
+    100030: guard.001
+    100032: hair.001
+    100034: Hand.L
+    100036: Hand.R
+    100038: Head
+    100040: Head_end
+    100042: helmet.001
+    100044: Hip
+    100046: IndexFinger1.L
+    100048: IndexFinger1.R
+    100050: IndexFinger2.L
+    100052: IndexFinger2.L_end
+    100054: IndexFinger2.R
+    100056: IndexFinger2.R_end
+    100058: LowerArm.L
+    100060: LowerArm.R
+    100062: mat.001
+    100064: metal.001
+    100066: Neck
+    100068: Shin.L
+    100070: Shin.R
+    100072: Shoulder.L
+    100074: Shoulder.R
+    100076: shoulder_pads.001
+    100078: Spine
+    100080: Thigh.L
+    100082: Thigh.R
+    100084: Thumb1.L
+    100086: Thumb1.R
+    100088: Thumb2.L
+    100090: Thumb2.L_end
+    100092: Thumb2.R
+    100094: Thumb2.R_end
+    100096: UpperArm.L
+    100098: UpperArm.R
+    100100: weapon.001
+    400000: Armature
+    400002: body_main.001
+    400004: Chest
+    400006: chest_front.001
+    400008: Fingers1.L
+    400010: Fingers1.R
+    400012: Fingers2.L
+    400014: Fingers2.L_end
+    400016: Fingers2.R
+    400018: Fingers2.R_end
+    400020: Foot.L
+    400022: Foot.L_end
+    400024: Foot.R
+    400026: Foot.R_end
+    400028: //RootNode
+    400030: guard.001
+    400032: hair.001
+    400034: Hand.L
+    400036: Hand.R
+    400038: Head
+    400040: Head_end
+    400042: helmet.001
+    400044: Hip
+    400046: IndexFinger1.L
+    400048: IndexFinger1.R
+    400050: IndexFinger2.L
+    400052: IndexFinger2.L_end
+    400054: IndexFinger2.R
+    400056: IndexFinger2.R_end
+    400058: LowerArm.L
+    400060: LowerArm.R
+    400062: mat.001
+    400064: metal.001
+    400066: Neck
+    400068: Shin.L
+    400070: Shin.R
+    400072: Shoulder.L
+    400074: Shoulder.R
+    400076: shoulder_pads.001
+    400078: Spine
+    400080: Thigh.L
+    400082: Thigh.R
+    400084: Thumb1.L
+    400086: Thumb1.R
+    400088: Thumb2.L
+    400090: Thumb2.L_end
+    400092: Thumb2.R
+    400094: Thumb2.R_end
+    400096: UpperArm.L
+    400098: UpperArm.R
+    400100: weapon.001
+    2100000: guard_metal_texture.001
+    2100002: guard_mat_texture.001
+    2300000: weapon.001
+    3300000: weapon.001
+    4300000: weapon.001
+    4300002: helmet.001
+    4300004: shoulder_pads.001
+    4300006: chest_front.001
+    4300008: body_main.001
+    7400000: Armature|ArmatureAction
+    9500000: //RootNode
+    13700000: body_main.001
+    13700002: chest_front.001
+    13700004: helmet.001
+    13700006: shoulder_pads.001
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 0.0025
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 0
+    previousCalculatedGlobalScale: 0.0025
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 1
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 1
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 3
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
