@@ -3,8 +3,10 @@ using UnityEngine;
 
 public class MinionSpawner : MonoBehaviour
 {
-    [SerializeField] private GameObject redMinionPrefab;  // Assign the Red Minion prefab in the Inspector
-    [SerializeField] private GameObject blueMinionPrefab; // Assign the Blue Minion prefab in the Inspector
+    [SerializeField] private GameObject redMinionMeleePrefab;  // Assign the Red Minion prefab in the Inspector
+    [SerializeField] private GameObject blueMinionMeleePrefab; // Assign the Blue Minion prefab in the Inspector
+    [SerializeField] private GameObject redMinionCasterPrefab;  // Assign the Red Caster Minion prefab in the Inspector
+    [SerializeField] private GameObject blueMinionCasterPrefab; // Assign the Blue Caster Minion prefab in the Inspector
 
     [SerializeField] private float spawnInterval = 0.02f;    // Time between spawns
     [SerializeField] private float waveInterval = 60f;      // Time between waves
@@ -52,15 +54,25 @@ public class MinionSpawner : MonoBehaviour
             // Determine if the minion is a caster
             bool isCaster = i >= 3;
 
-            // Spawn a Red Minion
-            SpawnMinion(redMinionPrefab, redSpawnPoint1, isCaster, RedBotWaypoints);
+            //spawn melee minions
+            if (!isCaster)
+            {
+                SpawnMinion(redMinionMeleePrefab, redSpawnPoint2, isCaster, RedTopWaypoints);
+                SpawnMinion(redMinionMeleePrefab, redSpawnPoint1, isCaster, RedBotWaypoints);
 
-            // Spawn a Blue Minion
-            SpawnMinion(blueMinionPrefab, blueSpawnPoint1, isCaster, BlueBotWaypoints);
+                SpawnMinion(blueMinionMeleePrefab, blueSpawnPoint2, isCaster, BlueTopWaypoints);
+                SpawnMinion(blueMinionMeleePrefab, blueSpawnPoint1, isCaster, BlueBotWaypoints);
+            }
 
-            SpawnMinion(redMinionPrefab, redSpawnPoint2, isCaster, RedTopWaypoints);
+            //spawn caster minions
+            if (isCaster)
+            {
+                SpawnMinion(redMinionCasterPrefab, redSpawnPoint2, isCaster, RedTopWaypoints);
+                SpawnMinion(redMinionCasterPrefab, redSpawnPoint1, isCaster, RedBotWaypoints);
 
-            SpawnMinion(blueMinionPrefab, blueSpawnPoint2, isCaster, BlueTopWaypoints);
+                SpawnMinion(blueMinionCasterPrefab, blueSpawnPoint2, isCaster, BlueTopWaypoints);
+                SpawnMinion(blueMinionCasterPrefab, blueSpawnPoint1, isCaster, BlueBotWaypoints);
+            }
 
 
             yield return new WaitForSeconds(spawnInterval);

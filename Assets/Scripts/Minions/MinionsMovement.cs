@@ -20,6 +20,9 @@ public class MinionsMovement : MonoBehaviour
     // Add LifeSystem to handle HP and Damage for minions
     private LifeSystem lifeSystem;
 
+    //get animator
+    private Animator animator;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,6 +31,8 @@ public class MinionsMovement : MonoBehaviour
         agent.radius = 0.2f; // Adjust this based on your scene
     
         lifeSystem = GetComponent<LifeSystem>(); // Get the LifeSystem component
+
+        animator = GetComponent<Animator>();
 
         if (lifeSystem != null)
         {
@@ -124,12 +129,17 @@ public class MinionsMovement : MonoBehaviour
         {
             if (target != null)
             {
+                //set bool isAttacking to true
+                animator.SetBool("isAttacking", true);
                 LifeSystem targetLifeSystem = target.GetComponent<LifeSystem>();
 
                 if (targetLifeSystem != null)
                 {
                     targetLifeSystem.TakeDamage(lifeSystem.GetAttackDamage());
                 }
+
+                //after attack, reset isAttacking to false
+                animator.SetBool("isAttacking", false);
             }
         }
 
