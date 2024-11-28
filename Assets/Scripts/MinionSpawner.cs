@@ -16,11 +16,11 @@ public class MinionSpawner : MonoBehaviour
     private GameObject[]RedTopWaypoints;
     private GameObject[]RedBotWaypoints;
 
-    private Vector3 redSpawnPoint1 = new Vector3(-50, 0, 6); // Red Minion spawn position
-    private Vector3 blueSpawnPoint1 = new Vector3(50, 0, 6); // Blue Minion spawn position
+    private Vector3 redSpawnPoint1 = new Vector3(-45, 0, 6); // Red Minion spawn position
+    private Vector3 blueSpawnPoint1 = new Vector3(45, 0, 6); // Blue Minion spawn position
 
-    private Vector3 redSpawnPoint2 = new Vector3(-50, 0, -6); // Red Minion spawn position
-    private Vector3 blueSpawnPoint2 = new Vector3(50, 0, -6); // Blue Minion spawn position
+    private Vector3 redSpawnPoint2 = new Vector3(-45, 0, -6); // Red Minion spawn position
+    private Vector3 blueSpawnPoint2 = new Vector3(45, 0, -6); // Blue Minion spawn position
 
     private int minionsPerWave = 6; // Total minions per team in a wave
 

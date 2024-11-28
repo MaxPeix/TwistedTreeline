@@ -14,14 +14,16 @@ public class PlayerMovement : MonoBehaviour
     public GameObject clickEffectPrefab;
     public GameObject selectTowerEffectPrefab;
     public GameObject selectMinionEffectPrefab;
-
     private GameObject activeSelectEffect;
+
+    private Animator anim;
 
     // Start is called before the first frame update
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         lifeSystem = GetComponent<LifeSystem>();
+        anim = GetComponent<Animator>();
 
         if (lifeSystem != null)
         {
@@ -32,9 +34,28 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Debug.Log("Target: " + target);
         HandleClick();
         Move();
+        MovingAnimation();
+    }
+
+    private void MovingAnimation()
+    {
+        if (agent.velocity.magnitude > 0.1f) // A small threshold to detect movement
+        {
+            if (anim.GetInteger("speed") != 1) // Only set if not already moving
+            {
+                Debug.Log("Moving");
+                anim.SetInteger("speed", 1);
+            }
+        }
+        else
+        {
+            if (anim.GetInteger("speed") != 0) // Only reset if not already idle
+            {
+                anim.SetInteger("speed", 0);
+            }
+        }
     }
 
     private void HandleClick()
@@ -135,8 +156,23 @@ public class PlayerMovement : MonoBehaviour
             LifeSystem targetLifeSystem = target.GetComponent<LifeSystem>();
             if (targetLifeSystem != null)
             {
-                targetLifeSystem.TakeDamage(lifeSystem.GetAttackDamage());
-                // Debug.Log("Attacking Target");
+                int randomAttack = Random.Range(0, 2);
+                if (randomAttack == 0)
+                {
+                    anim.SetBool("isAttacking1", true);
+                }
+                else
+                {
+                    anim.SetBool("isAttacking2", true);
+                }
+
+                if (targetLifeSystem != null)
+                {
+                    targetLifeSystem.TakeDamage(lifeSystem.GetAttackDamage());
+                }
+
+                // Lance une coroutine pour attendre avant de désactiver l'animation
+                StartCoroutine(ResetAttackAnimation());
             }
         }
         else
@@ -146,6 +182,14 @@ public class PlayerMovement : MonoBehaviour
 
         // Stop movement after attacking
         agent.SetDestination(transform.position);
+    }
+
+    //coroutine reset attack animation
+    IEnumerator ResetAttackAnimation()
+    {
+        yield return new WaitForSeconds(1.0f);
+        anim.SetBool("isAttacking1", false);
+        anim.SetBool("isAttacking2", false);
     }
 
     private void SelectTarget(GameObject newTarget, GameObject effectPrefab)
