@@ -127,23 +127,31 @@ public class MinionsMovement : MonoBehaviour
     {
         if (lifeSystem != null && lifeSystem.CanAttack())
         {
-            if (target != null)
+            if (target != null && target.CompareTag("PlayerRed") || target.CompareTag("PlayerBlue")
+            || target.CompareTag("MinionRed") || target.CompareTag("MinionBlue")
+            || target.CompareTag("TowerRed") || target.CompareTag("TowerBlue"))
             {
-                //set bool isAttacking to true
+                // Déclenche l'animation d'attaque
                 animator.SetBool("isAttacking", true);
-                LifeSystem targetLifeSystem = target.GetComponent<LifeSystem>();
 
+                LifeSystem targetLifeSystem = target.GetComponent<LifeSystem>();
                 if (targetLifeSystem != null)
                 {
                     targetLifeSystem.TakeDamage(lifeSystem.GetAttackDamage());
                 }
 
-                //after attack, reset isAttacking to false
-                animator.SetBool("isAttacking", false);
+                // Lance une coroutine pour attendre avant de désactiver l'animation
+                StartCoroutine(ResetAttackAnimation());
             }
         }
 
         agent.SetDestination(transform.position);
+    }
+
+    private IEnumerator ResetAttackAnimation()
+    {
+        yield return new WaitForSeconds(0.5f); // Ajustez le temps à la durée de l'animation d'attaque
+        animator.SetBool("isAttacking", false);
     }
 
     private void CheckForTarget()
