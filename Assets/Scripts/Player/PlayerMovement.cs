@@ -45,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (anim.GetInteger("speed") != 1) // Only set if not already moving
             {
-                Debug.Log("Moving");
+                // Debug.Log("Moving");
                 anim.SetInteger("speed", 1);
             }
         }
@@ -187,7 +187,7 @@ public class PlayerMovement : MonoBehaviour
     //coroutine reset attack animation
     IEnumerator ResetAttackAnimation()
     {
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.1f);
         anim.SetBool("isAttacking1", false);
         anim.SetBool("isAttacking2", false);
     }

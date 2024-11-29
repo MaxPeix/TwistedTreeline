@@ -146,17 +146,17 @@ public class TowerSystem : MonoBehaviour
         // If this is the second shot, apply 80 damage
         if (playerShotCount == 1)
         {
-            damage = 80f;
+            damage = damagePerHit + 40f;
         }
         // If this is the third shot, apply 120 damage
         else if (playerShotCount == 2)
         {
-            damage = 120f;
+            damage = damagePerHit + 80f;
         }
         // For all subsequent shots, apply 200 damage
         else if (playerShotCount >= 3)
         {
-            damage = 200f;
+            damage = damagePerHit + 160f;
         }
 
         // Deal the calculated damage to the player

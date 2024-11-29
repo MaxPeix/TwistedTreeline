@@ -36,7 +36,7 @@ public class MinionsMovement : MonoBehaviour
 
         if (lifeSystem != null)
         {
-            lifeSystem.Initialize(100, 0, 0, 25, 0); // Initialize stats for minions
+            lifeSystem.Initialize(500, 0, 0, 25, 0); // Initialize stats for minions
         }
 
         if (isCaster)
