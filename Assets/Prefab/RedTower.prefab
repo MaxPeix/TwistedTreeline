@@ -572,7 +572,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8dfe0f2d8fedb4b438bc9bc8e4956145, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MaxHP: 3000
+  HP: 3000
+  Armor: 30
+  MagicArmor: 30
+  AttackDamage: 0
+  MagicDamage: 0
+  Speed: 0
+  AttackRange: 0
+  AttackCooldown: 1
   regenHp: 0
+  EntityName: Tower
 --- !u!114 &7001923506501054744
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -585,8 +595,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 751905c419b9c2344a5c7a78466c5316, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 3000
-  maxHP: 3000
   damagePerHit: 40
   hitEffectPrefab: {fileID: 1107157273978836427, guid: edde06cc7bee13d47b762f59f50d5741, type: 3}
 --- !u!65 &-8972012858861261946

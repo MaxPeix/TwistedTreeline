@@ -11,6 +11,7 @@ public class MinionsMovement : MonoBehaviour
 
     private float attackRange = 3f;
     public float detectRange = 8f;
+    private float speed = 1.5f;
 
     public bool isCaster;
 
@@ -32,12 +33,10 @@ public class MinionsMovement : MonoBehaviour
     
         lifeSystem = GetComponent<LifeSystem>(); // Get the LifeSystem component
 
-        animator = GetComponent<Animator>();
+        attackRange = lifeSystem.AttackRange; // Set the attack range from the LifeSystem component
+        speed = lifeSystem.Speed; // Set the speed from the LifeSystem component
 
-        if (lifeSystem != null)
-        {
-            lifeSystem.Initialize(500, 0, 0, 25, 0); // Initialize stats for minions
-        }
+        animator = GetComponent<Animator>();
 
         if (isCaster)
         {
@@ -76,6 +75,8 @@ public class MinionsMovement : MonoBehaviour
 
     private void Move()
     {
+        speed = lifeSystem.Speed;
+        agent.speed = speed;
         if (target != null)
         {
             // Adjust stopping distance dynamically

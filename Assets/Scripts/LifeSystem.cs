@@ -3,30 +3,36 @@ using UnityEngine;
 
 public class LifeSystem : MonoBehaviour
 {
-    // Basic stats
-    public float HP { get; private set; }
-    public float MaxHP { get; private set; }
-    public float Armor { get; private set; }
-    public float MagicArmor { get; private set; }
-    public float AttackDamage { get; private set; }
-    public float MagicDamage { get; private set; }
+    [Header("Basic Stats")]
+    public float MaxHP = 1000f;           // Set default maximum HP
+    public float HP = 1000f;             // Set default current HP
+    public float Armor = 30f;            // Default physical armor
+    public float MagicArmor = 25f;       // Default magic resistance
+    public float AttackDamage = 50f;     // Default attack damage
+    public float MagicDamage = 0f;       // Default magic damage
+    public float Speed = 3.5f;           // Movement speed
+    public float AttackRange = 2f;       // Attack range
+    public float AttackCooldown = 1f;    // Attack cooldown in seconds
 
-    public float regenHp = 0f;  // Health regeneration per second
-    private float regenInterval = 0.1f;  // Regeneration interval (0.1f seconds)
+    [Header("Health Regeneration")]
+    public float regenHp = 0f;           // Health regeneration per second
+    private float regenInterval = 0.1f;  // Interval for regeneration
 
-    private float attackCooldown = 1f;
-    private float lastAttackTime;
+    private float lastAttackTime;        // Timestamp of the last attack
+    public string EntityName;          // Name of the entity
+    private ExpSystem expSystem;        // Reference to the ExpSystem component
 
-    // Initialize stats (can be called from other scripts)
-    public void Initialize(float maxHP, float armor, float magicArmor, float attackDamage, float magicDamage)
+
+    private void Start()
     {
-        MaxHP = maxHP;
-        HP = maxHP;
-        Armor = armor;
-        MagicArmor = magicArmor;
-        AttackDamage = attackDamage;
-        MagicDamage = magicDamage;
-        lastAttackTime = Time.time;
+        GameObject gameEngine = GameObject.Find("GameEngine");
+        if (gameEngine != null)
+        {
+            expSystem = gameEngine.GetComponent<ExpSystem>();
+        }
+
+        // Clamp HP to ensure it does not exceed MaxHP or fall below 0
+        HP = Mathf.Clamp(HP, 0, MaxHP);
 
         // Start health regeneration
         StartCoroutine(RegenerateHealth());
@@ -38,6 +44,39 @@ public class LifeSystem : MonoBehaviour
         HP = Mathf.Clamp(value, 0, MaxHP);
         if (HP <= 0)
         {
+            // Determine the amount of experience to award based on the entity's tag
+            int expAmount = 0;
+            string team = null;
+
+            if (CompareTag("MinionBlue") || CompareTag("PlayerBlue") || CompareTag("TowerBlue"))
+            {
+                team = "RedTeam"; // The opposing team gains experience
+            }
+            else if (CompareTag("MinionRed") || CompareTag("PlayerRed") || CompareTag("TowerRed"))
+            {
+                team = "BlueTeam";
+            }
+
+            if (CompareTag("MinionBlue") || CompareTag("MinionRed"))
+            {
+                expAmount = 100;
+            }
+            else if (CompareTag("PlayerBlue") || CompareTag("PlayerRed"))
+            {
+                expAmount = 500;
+            }
+            else if (CompareTag("TowerBlue") || CompareTag("TowerRed"))
+            {
+                expAmount = 1000;
+            }
+
+            // Award experience to the opposing team
+            if (expSystem != null && team != null && expAmount > 0)
+            {
+                // Debug.Log("Awarding " + expAmount + " experience to " + team);
+                expSystem.GainExp(team, expAmount);
+            }
+
             DestroyObject(); // Destroy the object when HP is zero or less
         }
     }
@@ -91,9 +130,42 @@ public class LifeSystem : MonoBehaviour
         return MagicDamage;
     }
 
+    // Getter and Setter for Speed
+    public void SetSpeed(float value)
+    {
+        Speed = Mathf.Max(0, value);
+    }
+
+    public float GetSpeed()
+    {
+        return Speed;
+    }
+
+    // Getter and Setter for Attack Range
+    public void SetAttackRange(float value)
+    {
+        AttackRange = Mathf.Max(0, value);
+    }
+
+    public float GetAttackRange()
+    {
+        return AttackRange;
+    }
+
+    // Getter and Setter for Attack Cooldown
+    public void SetAttackCooldown(float value)
+    {
+        AttackCooldown = Mathf.Max(0, value);
+    }
+
+    public float GetAttackCooldown()
+    {
+        return AttackCooldown;
+    }
+
     public bool CanAttack()
     {
-        if (Time.time - lastAttackTime >= attackCooldown)
+        if (Time.time - lastAttackTime >= AttackCooldown)
         {
             lastAttackTime = Time.time;
             return true;

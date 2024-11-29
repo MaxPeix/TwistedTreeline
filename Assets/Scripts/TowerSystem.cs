@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class TowerSystem : MonoBehaviour
 {
-    public float HP = 3000f;
-    public float maxHP = 3000f;
     public float damagePerHit = 40f;
     private float lastAttackTime = 0f;
     private float attackCooldown = 1f;
@@ -23,7 +21,6 @@ public class TowerSystem : MonoBehaviour
     void Start()
     {
         lifeSystem = GetComponent<LifeSystem>();
-        lifeSystem.Initialize(HP, 0, 0, 0, 0); // Initialize with no armor or magic resist
     }
 
     // Update is called once per frame

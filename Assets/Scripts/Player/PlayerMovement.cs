@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
 
     private GameObject target;
     private float range = 5f;
+    private float speed = 3.5f;
 
     public GameObject clickEffectPrefab;
     public GameObject selectTowerEffectPrefab;
@@ -25,10 +26,8 @@ public class PlayerMovement : MonoBehaviour
         lifeSystem = GetComponent<LifeSystem>();
         anim = GetComponent<Animator>();
 
-        if (lifeSystem != null)
-        {
-            lifeSystem.Initialize(1000, 30, 25, 50, 0);
-        }
+        range = lifeSystem.AttackRange;
+        speed = lifeSystem.Speed;
     }
 
     // Update is called once per frame
@@ -92,6 +91,10 @@ public class PlayerMovement : MonoBehaviour
                 {
                     SelectTarget(hit.collider.gameObject, selectMinionEffectPrefab);
                 }
+                else if (Physics.Raycast(ray, out hit) && hit.collider.CompareTag("PlayerBlue"))
+                {
+                    SelectTarget(hit.collider.gameObject, selectMinionEffectPrefab);
+                }
             }
 
             // Check if the player's tag is "PlayerBlue" and select appropriate targets
@@ -105,12 +108,18 @@ public class PlayerMovement : MonoBehaviour
                 {
                     SelectTarget(hit.collider.gameObject, selectMinionEffectPrefab);
                 }
+                else if (Physics.Raycast(ray, out hit) && hit.collider.CompareTag("PlayerRed"))
+                {
+                    SelectTarget(hit.collider.gameObject, selectMinionEffectPrefab);
+                }
             }
         }
     }
 
     private void Move()
     {
+        speed = lifeSystem.Speed;
+        agent.speed = speed;
         if (target != null)
         {
             Vector3 targetPosition = target.transform.position;
@@ -118,7 +127,7 @@ public class PlayerMovement : MonoBehaviour
             if (target.CompareTag("TowerBlue") || target.CompareTag("TowerRed"))
             {
                 // Adjust target position for towers
-                float towerRadius = 3f; // Adjust this value as needed
+                float towerRadius = 4f; // Adjust this value as needed
                 Vector3 directionToTower = (target.transform.position - transform.position).normalized;
                 targetPosition = target.transform.position - directionToTower * towerRadius;
 
@@ -145,6 +154,17 @@ public class PlayerMovement : MonoBehaviour
 
     private bool isInRange()
     {
+        if (target.CompareTag("TowerBlue") || target.CompareTag("TowerRed"))
+        {
+            if (range < 4f)
+            {
+                range = 4f;
+            }
+        }
+        else
+        {
+            range = lifeSystem.AttackRange;
+        }
         return Vector3.Distance(transform.position, target.transform.position) <= range;
     }
 
