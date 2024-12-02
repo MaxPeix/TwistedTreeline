@@ -3150,6 +3150,7 @@ GameObject:
   - component: {fileID: 8731570653320338081}
   - component: {fileID: -1302308630793037153}
   - component: {fileID: -386716101619233909}
+  - component: {fileID: 2947763401308747317}
   m_Layer: 0
   m_Name: Minotaur
   m_TagString: PlayerBlue
@@ -3348,6 +3349,19 @@ MonoBehaviour:
   throwEffectPrefab: {fileID: 3125908671876608230, guid: 2e07e5ba5a6e8b74d8206f9be0e29d37, type: 3}
   throwForce: 6
   throwHeight: 2
+--- !u!114 &2947763401308747317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5923086360218836794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73ea24f71948cf34b950a14fff549b06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  summonPrefab: {fileID: 412329210356048063, guid: 0817852306e510041b7bc6ffdc8a579e, type: 3}
 --- !u!1 &6069656946763783075
 GameObject:
   m_ObjectHideFlags: 0
