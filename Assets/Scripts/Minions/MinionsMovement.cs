@@ -66,13 +66,12 @@ public class MinionsMovement : MonoBehaviour
         if (target != null && (target.CompareTag("TowerRed") || target.CompareTag("TowerBlue")))
         {
             // Add extra range for towers
-            adjustedRange += 1.5f;
+            adjustedRange += 2.5f;
         }
 
         // Check if the target is within the adjusted range
         return Vector3.Distance(transform.position, target.transform.position) <= adjustedRange;
     }
-
     private void Move()
     {
         speed = lifeSystem.Speed;
@@ -82,7 +81,7 @@ public class MinionsMovement : MonoBehaviour
             // Adjust stopping distance dynamically
             if (target.CompareTag("TowerRed") || target.CompareTag("TowerBlue"))
             {
-                agent.stoppingDistance = Mathf.Min(attackRange, 3f); // Adjust stopping distance for towers
+                agent.stoppingDistance = Mathf.Min(attackRange, 2.5f); // Adjust stopping distance for towers
             }
             else
             {

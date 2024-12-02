@@ -92,6 +92,7 @@ public class TowerSystem : MonoBehaviour
             if (currentEffect != null)
             {
                 Destroy(currentEffect);
+                currentEffect = null;
             }
         }
 
@@ -123,9 +124,22 @@ public class TowerSystem : MonoBehaviour
                 {
                     ApplyPlayerDamage(targetLifeSystem);
                 }
+                else if (currentTarget.CompareTag("MinionRed") || currentTarget.CompareTag("MinionBlue"))
+                {
+                    float damage = 0.4f; // Ranged minions take 90%, melee minions take 40%
+                    if (targetLifeSystem.AttackRange < 5f)
+                    {
+                        damage = 0.4f;
+                    }
+                    else
+                    {
+                        damage = 0.9f;
+                    }
+                    targetLifeSystem.TakeDamage(targetLifeSystem.MaxHP * damage);
+                }
                 else
                 {
-                    // Deal standard damage to minions
+                    // Deal standard damage to others
                     targetLifeSystem.TakeDamage(damagePerHit);
                 }
 
