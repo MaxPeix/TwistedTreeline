@@ -1,0 +1,84 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8552688176138677648
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 106491344320506053}
+  - component: {fileID: 4695550186230027996}
+  - component: {fileID: 8665372298470993788}
+  m_Layer: 0
+  m_Name: GameEngine
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &106491344320506053
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8552688176138677648}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -14.850468, y: -50.982456, z: -86.09303}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4695550186230027996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8552688176138677648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79f4c456f571e644ea569d437d40a0ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  redMinionMeleePrefab: {fileID: 791578221960755537, guid: 6fd53f8ca9a1a534095f5f493c4047ba, type: 3}
+  blueMinionMeleePrefab: {fileID: 791578221960755537, guid: 292833bdac625e146af0e0a1995a8f2a, type: 3}
+  redMinionCasterPrefab: {fileID: 3198094640674644720, guid: 35639ca7fe6b0e240bde0e45e737ac4b, type: 3}
+  blueMinionCasterPrefab: {fileID: 3198094640674644720, guid: 50a091b6b8e081441b96639bc50448ba, type: 3}
+  spawnInterval: 2
+  waveInterval: 60
+  BlueTopWaypoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  BlueBotWaypoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+--- !u!114 &8665372298470993788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8552688176138677648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a0d90a829a39654ba115742adc4c677, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blueTeamExp: 0
+  redTeamExp: 0
+  blueTeamLevel: 1
+  redTeamLevel: 1
+  levelThresholds: e8030000d0070000b80b0000a00f00008813000070170000581b0000401f00002823000010270000
