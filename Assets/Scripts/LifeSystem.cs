@@ -19,6 +19,7 @@ public class LifeSystem : MonoBehaviour
     private float regenInterval = 0.1f;  // Interval for regeneration
 
     private float lastAttackTime;        // Timestamp of the last attack
+    public float respawnTime = 8f;           // Respawn time for the entity
     public string EntityName;          // Name of the entity
     private ExpSystem expSystem;        // Reference to the ExpSystem component
 
@@ -79,7 +80,55 @@ public class LifeSystem : MonoBehaviour
                 expSystem.GainExp(team, expAmount);
             }
 
-            DestroyObject(); // Destroy the object when HP is zero or less
+            // Destroy the GameObject if its not a Player
+            if (!CompareTag("PlayerBlue") && !CompareTag("PlayerRed"))
+            {
+                DestroyObject();
+            }
+            else
+            {
+                // Respawn the player
+                StartRespawn();
+            }
+        }
+    }
+
+    private void StartRespawn()
+    {
+        if (GameEngine.Instance != null)
+        {
+            GameEngine.Instance.StartCoroutine(GameEngine.Instance.RespawnCoroutine(this, respawnTime));
+        }
+        else
+        {
+            Debug.LogError("GameEngine instance is missing!");
+        }
+        gameObject.SetActive(false); // Deactivate the GameObject
+    }
+
+    public void FinishRespawn()
+    {
+        // Reset HP and enable the GameObject
+        HP = MaxHP;
+        if (healthBar != null)
+        {
+            healthBar.UpdateHealth(1);
+        }
+        else
+        {
+            Debug.LogWarning("HealthBar reference is missing!");
+        }
+
+        gameObject.SetActive(true);
+
+        // Set the position of the player to their spawn point
+        if (CompareTag("PlayerBlue"))
+        {
+            transform.position = new Vector3(54.5f, 0f, 0f);
+        }
+        else if (CompareTag("PlayerRed"))
+        {
+            transform.position = new Vector3(-53f, 0f, 0f);
         }
     }
 

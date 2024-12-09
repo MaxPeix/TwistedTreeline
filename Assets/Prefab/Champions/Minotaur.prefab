@@ -3307,7 +3307,11 @@ MonoBehaviour:
   AttackRange: 2
   AttackCooldown: 1
   regenHp: 5
+  respawnTime: 8
   EntityName: Minotaur
+  redSpawnPoint: {fileID: 0}
+  blueSpawnPoint: {fileID: 0}
+  healthBar: {fileID: 5273777771478326184, guid: 707620358926eaf76841d7a4904b3b39, type: 3}
 --- !u!114 &8731570653320338081
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -84,6 +84,7 @@ public class ExpSystem : MonoBehaviour
                         lifeSystem.MaxHP += lifeSystem.MaxHP * 0.15f;
                         lifeSystem.SetHP(lifeSystem.GetHP() + (lifeSystem.MaxHP * 0.15f)); // Heal for 15% max HP
                         lifeSystem.AttackDamage += lifeSystem.AttackDamage * 0.1f;
+                        lifeSystem.respawnTime += 3f;
                         break;
                     default:
                         break;
