@@ -16,10 +16,20 @@ public class TowerSystem : MonoBehaviour
     // Effect to apply on target when attacked
     public GameObject hitEffectPrefab; // Reference to the effect prefab
     private GameObject currentEffect; // Track the current effect
+    public LineRenderer lineRenderer; // Assign the LineRenderer in the Inspector or dynamically
+    public GameObject bulletPrefab;  // Assign the bullet prefab in the Inspector
+    public Transform firePoint;      // A point on the tower where the bullet is fired
+
+
 
     // Start is called before the first frame update
     void Start()
     {
+        if (lineRenderer == null)
+        {
+            lineRenderer = GetComponent<LineRenderer>();
+        }
+        lineRenderer.enabled = false; // Initially, disable the line
         lifeSystem = GetComponent<LifeSystem>();
     }
 
@@ -98,8 +108,31 @@ public class TowerSystem : MonoBehaviour
 
         // Assign the closest valid target
         currentTarget = closestTarget;
+        // Draw the line if a target is found
+        if (currentTarget != null)
+        {
+            DrawLineToTarget(currentTarget.transform.position);
+        }
+        else
+        {
+            DisableLine(); // Disable the line if no target
+        }
     }
 
+    void DrawLineToTarget(Vector3 targetPosition)
+    {
+        lineRenderer.enabled = true; // Enable the line
+        lineRenderer.SetPosition(0, transform.position); // Start point (tower position)
+        lineRenderer.SetPosition(1, targetPosition);     // End point (target position)
+    }
+
+    void DisableLine()
+    {
+        if (lineRenderer != null)
+        {
+            lineRenderer.enabled = false; // Disable the line when no target
+        }
+    }
     // Check if the tower can attack based on cooldown
     bool CanAttack()
     {
@@ -116,35 +149,14 @@ public class TowerSystem : MonoBehaviour
     {
         if (currentTarget != null)
         {
-            LifeSystem targetLifeSystem = currentTarget.GetComponent<LifeSystem>();
-            if (targetLifeSystem != null)
-            {
-                // If the target is a player, apply progressively increasing damage
-                if (currentTarget.CompareTag("PlayerRed") || currentTarget.CompareTag("PlayerBlue"))
-                {
-                    ApplyPlayerDamage(targetLifeSystem);
-                }
-                else if (currentTarget.CompareTag("MinionRed") || currentTarget.CompareTag("MinionBlue"))
-                {
-                    float damage = 0.4f; // Ranged minions take 90%, melee minions take 40%
-                    if (targetLifeSystem.AttackRange < 5f)
-                    {
-                        damage = 0.4f;
-                    }
-                    else
-                    {
-                        damage = 0.9f;
-                    }
-                    targetLifeSystem.TakeDamage(targetLifeSystem.MaxHP * damage);
-                }
-                else
-                {
-                    // Deal standard damage to others
-                    targetLifeSystem.TakeDamage(damagePerHit);
-                }
+            // Instantiate a bullet
+            GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
 
-                // Apply the effect on the target
-                ApplyEffectOnTarget(currentTarget);
+            // Configure the bullet's target and damage
+            Bullet bulletScript = bullet.GetComponent<Bullet>();
+            if (bulletScript != null)
+            {
+                bulletScript.SetTarget(currentTarget, damagePerHit, ApplyPlayerDamage, playerShotCount);
             }
         }
     }
@@ -154,23 +166,18 @@ public class TowerSystem : MonoBehaviour
     {
         float damage = damagePerHit;
 
-        // If this is the second shot, apply 80 damage
         if (playerShotCount == 1)
         {
-            damage = damagePerHit + 40f;
+            damage += 40f;
         }
-        // If this is the third shot, apply 120 damage
-        else if (playerShotCount == 2)
+        if (playerShotCount == 2)
         {
-            damage = damagePerHit + 80f;
+            damage += 80f;
         }
-        // For all subsequent shots, apply 200 damage
         else if (playerShotCount >= 3)
         {
-            damage = damagePerHit + 160f;
+            damage += 160f;
         }
-
-        // Deal the calculated damage to the player
         targetLifeSystem.TakeDamage(damage);
         playerShotCount++;
     }
