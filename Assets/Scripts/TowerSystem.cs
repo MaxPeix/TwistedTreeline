@@ -122,7 +122,7 @@ public class TowerSystem : MonoBehaviour
     void DrawLineToTarget(Vector3 targetPosition)
     {
         lineRenderer.enabled = true; // Enable the line
-        lineRenderer.SetPosition(0, transform.position); // Start point (tower position)
+        lineRenderer.SetPosition(0, firePoint.position); // Start point (tower position)
         lineRenderer.SetPosition(1, targetPosition);     // End point (target position)
     }
 

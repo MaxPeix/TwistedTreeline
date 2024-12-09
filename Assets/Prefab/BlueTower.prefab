@@ -83,6 +83,37 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &2373602894951914226
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7455070718914615284}
+  m_Layer: 0
+  m_Name: Fire Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7455070718914615284
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2373602894951914226}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.7071068, z: -0.7071068, w: 0}
+  m_LocalPosition: {x: 0, y: 0.00016669212, z: 0.06479141}
+  m_LocalScale: {x: 0.03334083, y: 0.0133425435, z: 0.03334083}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 683573656147800683}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3813509922545520280
 GameObject:
   m_ObjectHideFlags: 0
@@ -370,7 +401,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damagePerHit: 40
   hitEffectPrefab: {fileID: 1107157273978836427, guid: edde06cc7bee13d47b762f59f50d5741, type: 3}
-  lineRenderer: {fileID: 0}
+  lineRenderer: {fileID: -1817969875140325491}
+  bulletPrefab: {fileID: 447481914740816529, guid: 36c14774bb3d88e7ab81012b747c6460, type: 3}
+  firePoint: {fileID: 7455070718914615284}
 --- !u!65 &2165698454699699154
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -401,8 +434,8 @@ LineRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5937526754502399069}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
   m_MotionVectors: 0
@@ -413,7 +446,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 98cc821a6b46e7c488562c8df10ed5fc, type: 2}
+  - {fileID: 2100000, guid: 32fac6e45890e9d48961b3db7c93c0be, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -444,8 +477,8 @@ LineRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.07312393
-        value: 0.11417198
+        time: 0.41934967
+        value: 0.011360168
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -457,8 +490,8 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
-      key1: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 1, g: 0, b: 0, a: 1}
+      key1: {r: 1, g: 0, b: 0, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -482,7 +515,7 @@ LineRenderer:
       atime6: 0
       atime7: 0
       m_Mode: 0
-      m_ColorSpace: -1
+      m_ColorSpace: 0
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0
@@ -528,7 +561,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 5.9986496, y: 5.9986496, z: 18.737053}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 7455070718914615284}
   m_Father: {fileID: 3287118629637530089}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6994057154327988900
