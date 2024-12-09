@@ -12,7 +12,7 @@ public class MobaCam : MonoBehaviour
     void Start()
     {
         // Set the camera to the player's position
-        transform.position = new Vector3(player.transform.position.x, player.transform.position.y + 20, player.transform.position.z);
+        transform.position = player.transform.position +  new Vector3(0, 20, 0);
     }
 
     // Update is called once per frame

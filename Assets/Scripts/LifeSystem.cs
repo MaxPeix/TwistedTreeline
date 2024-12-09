@@ -22,6 +22,8 @@ public class LifeSystem : MonoBehaviour
     public string EntityName;          // Name of the entity
     private ExpSystem expSystem;        // Reference to the ExpSystem component
 
+    public HealthBar healthBar;
+
 
     private void Start()
     {
@@ -179,6 +181,7 @@ public class LifeSystem : MonoBehaviour
         // Calculate effective damage after armor reduction but armor reduces damage by a percentage
         float effectiveDamage = Mathf.Max(0, damage - (damage * Armor / 100));
         SetHP(HP - effectiveDamage);
+        healthBar.UpdateHealth(HP / MaxHP);
     }
 
     // Take magical damage
