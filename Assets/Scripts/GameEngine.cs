@@ -6,6 +6,8 @@ public class GameEngine : MonoBehaviour
     // Singleton instance for easy access from other scripts
     public static GameEngine Instance;
 
+    private AudioSource music;
+
     private void Awake()
     {
         // Ensure only one instance of GameEngine exists
@@ -18,6 +20,11 @@ public class GameEngine : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        // Get the AudioSource component from the GameObject
+        music = GetComponent<AudioSource>();
+        music.loop = true;
+        music.Play();
     }
 
     // Coroutine to handle respawning

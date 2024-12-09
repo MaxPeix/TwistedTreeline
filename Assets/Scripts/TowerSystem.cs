@@ -19,6 +19,7 @@ public class TowerSystem : MonoBehaviour
     public LineRenderer lineRenderer; // Assign the LineRenderer in the Inspector or dynamically
     public GameObject bulletPrefab;  // Assign the bullet prefab in the Inspector
     public Transform firePoint;      // A point on the tower where the bullet is fired
+    private AudioSource bulletSound;  // Assign the bullet sound in the Inspector
 
 
 
@@ -31,6 +32,7 @@ public class TowerSystem : MonoBehaviour
         }
         lineRenderer.enabled = false; // Initially, disable the line
         lifeSystem = GetComponent<LifeSystem>();
+        bulletSound = GetComponents<AudioSource>()[0];
     }
 
     // Update is called once per frame
@@ -151,6 +153,9 @@ public class TowerSystem : MonoBehaviour
         {
             // Instantiate a bullet
             GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
+
+            //Play the bullet sound
+            bulletSound.Play();
 
             // Configure the bullet's target and damage
             Bullet bulletScript = bullet.GetComponent<Bullet>();

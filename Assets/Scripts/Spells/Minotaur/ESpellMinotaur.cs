@@ -11,12 +11,14 @@ public class ESpellMinotaur : MonoBehaviour
     public GameObject throwEffectPrefab; // Effect when the spell is cast
     public float throwForce = 6f; // Maximum force to throw the target
     public float throwHeight = 2f; // The height to lift the target
+    private AudioSource throwSound;
 
     // Start is called before the first frame update
     void Start()
     {
         anim = GetComponent<Animator>();
         lifeSystem = GetComponent<LifeSystem>();
+        throwSound = GetComponents<AudioSource>()[2];
         lastAttackTime = Time.time - cooldown; // Set the last attack time to the past to allow the first attack
     }
 
@@ -80,6 +82,8 @@ public class ESpellMinotaur : MonoBehaviour
 
                     // Debug.Log("Throwing: " + closestTarget.name + " to " + mousePosition);
 
+                    // Play the throw sound
+                    throwSound.Play();
                     // Start the throw coroutine with the calculated direction and position
                     StartCoroutine(ThrowTarget(closestTarget, throwPosition));
 

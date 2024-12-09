@@ -9,12 +9,14 @@ public class RSpellMinotaur : MonoBehaviour
     private Animator anim;
     private LifeSystem lifeSystem;
     public GameObject summonPrefab;
+    private AudioSource summonSound;
 
     // Start is called before the first frame update
     void Start()
     {
         anim = GetComponent<Animator>();
         lifeSystem = GetComponent<LifeSystem>();
+        summonSound = GetComponents<AudioSource>()[3];
         lastAttackTime = Time.time - cooldown; // Set the last attack time to the past to allow the first attack
     }
 
@@ -58,6 +60,10 @@ public class RSpellMinotaur : MonoBehaviour
                     spawnPosition,
                     Quaternion.Euler(180, angleY, 0) // Adjust rotation to face the direction
                 );
+
+                // Play the summon sound already with 1s time offset
+                summonSound.time = 1.2f;
+                summonSound.Play();
 
                 // Destroy the summon after 3 seconds
                 Destroy(summon, 3f);

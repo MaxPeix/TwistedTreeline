@@ -9,12 +9,14 @@ public class WSpellMinotaur : MonoBehaviour
     private Animator anim;
     private LifeSystem lifeSystem;
     public GameObject healEffectPrefab;
+    private AudioSource healSound;
 
     // Start is called before the first frame update
     void Start()
     {
         anim = GetComponent<Animator>();
         lifeSystem = GetComponent<LifeSystem>();
+        healSound = GetComponents<AudioSource>()[1];
         lastAttackTime = Time.time - cooldown; // Set the last attack time to the past to allow the first attack
     }
 
@@ -34,6 +36,7 @@ public class WSpellMinotaur : MonoBehaviour
         {
             // Heal the Minotaur for 30% max HP
             lifeSystem.SetHP(lifeSystem.GetHP() + (lifeSystem.MaxHP * 0.3f));
+            healSound.Play();
 
             // Instantiate heal effect at the Minotaur's position
             if (healEffectPrefab != null)

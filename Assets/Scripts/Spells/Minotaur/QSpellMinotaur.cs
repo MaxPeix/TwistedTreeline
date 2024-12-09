@@ -11,12 +11,14 @@ public class QSpellMinotaur : MonoBehaviour
     private Animator anim;
     private LifeSystem lifeSystem;
     public GameObject kickEffectPrefab;
+    private AudioSource kickSound;
 
     // Start is called before the first frame update
     void Start()
     {
         anim = GetComponent<Animator>();
         lifeSystem = GetComponent<LifeSystem>();
+        kickSound = GetComponents<AudioSource>()[0];
         lastAttackTime = Time.time - cooldown; // Set the last attack time to the past to allow the first attack
     }
 
@@ -50,6 +52,7 @@ public class QSpellMinotaur : MonoBehaviour
                     LifeSystem targetLifeSystem = target.GetComponent<LifeSystem>();
 
                     anim.SetBool("isKicking", true);
+                    kickSound.Play();
                     if (kickEffectPrefab != null)
                     {
                         GameObject kickEffect = Instantiate(kickEffectPrefab, transform.position, Quaternion.identity);

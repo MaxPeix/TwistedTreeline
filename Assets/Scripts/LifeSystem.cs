@@ -37,6 +37,16 @@ public class LifeSystem : MonoBehaviour
         // Clamp HP to ensure it does not exceed MaxHP or fall below 0
         HP = Mathf.Clamp(HP, 0, MaxHP);
 
+        // Initialize the health bar
+        if (healthBar != null)
+        {
+            healthBar.UpdateHealth(HP / MaxHP);
+        }
+        else
+        {
+            Debug.LogWarning("HealthBar reference is missing!");
+        }
+
         // Start health regeneration
         StartCoroutine(RegenerateHealth());
     }
@@ -45,6 +55,14 @@ public class LifeSystem : MonoBehaviour
     public void SetHP(float value)
     {
         HP = Mathf.Clamp(value, 0, MaxHP);
+        if (healthBar != null)
+        {
+            healthBar.UpdateHealth(HP / MaxHP);
+        }
+        else
+        {
+            Debug.LogWarning("HealthBar reference is missing!");
+        }
         if (HP <= 0)
         {
             // Determine the amount of experience to award based on the entity's tag
